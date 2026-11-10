@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="color-scheme" content="light dark" />
+    <meta name="color-scheme" content="light" />
     <meta name="description" content="AI Nearby, find local AI services near you: chatbot setup, AI tutoring, vendor events, door repairs, locksmith, security film application, smart home help, AI marketing and more." />
     <link rel="icon" href="data:," />
     <title>AI Nearby, We Help Find Local Services Near You</title>
@@ -12,33 +12,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
     <style>
       :root {
-        --bg: #f6f5f0;
-        --surface: #fffdf8;
-        --surface-2: #efede4;
-        --ink: #17211c;
-        --ink-soft: #4c5a52;
-        --line: #ddd9cb;
-        --accent: #0e7a5f;
+        color-scheme: light;
+        --bg: #faf7f0;
+        --surface: #ffffff;
+        --surface-2: #f0e8d9;
+        --ink: #29251e;
+        --ink-soft: #625b50;
+        --line: #ded4c4;
+        --accent: #8a6100;
         --accent-ink: #ffffff;
-        --accent-soft: #dcefe7;
-        --signal: #e8b33a;
+        --accent-soft: #fff0b8;
+        --signal: #f4c84b;
         --radius: 14px;
-        --shadow: 0 1px 2px rgba(23, 33, 28, .06), 0 8px 24px -12px rgba(23, 33, 28, .18);
-      }
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --bg: #101613;
-          --surface: #182019;
-          --surface-2: #1f2a21;
-          --ink: #eef2ec;
-          --ink-soft: #a7b5ab;
-          --line: #2e3d33;
-          --accent: #2fbb92;
-          --accent-ink: #0c1712;
-          --accent-soft: #17382c;
-          --signal: #e8b33a;
-          --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -12px rgba(0, 0, 0, .6);
-        }
+        --shadow: 0 1px 2px rgba(41, 37, 30, .05), 0 8px 24px -12px rgba(41, 37, 30, .14);
       }
       * { box-sizing: border-box; }
       html { -webkit-text-size-adjust: 100%; }
@@ -126,19 +112,19 @@
 
       /* ---------- Match box ---------- */
       .match-box {
-        background: var(--ink); color: #f2f4ef; border-radius: 18px; padding: 18px;
+        background: #eee4d2; color: var(--ink); border: 1px solid var(--line); border-radius: 18px; padding: 18px;
       }
-      @media (prefers-color-scheme: dark) { .match-box { background: var(--surface-2); color: var(--ink); } }
+
       .match-box h2 { font-size: 19px; }
-      .match-box p { color: #c3cec5; font-size: 14.5px; margin: 6px 0 12px; }
-      @media (prefers-color-scheme: dark) { .match-box p { color: var(--ink-soft); } }
+      .match-box p { color: var(--ink-soft); font-size: 14.5px; margin: 6px 0 12px; }
+
       .match-row { display: flex; gap: 8px; }
       .match-row input {
         flex: 1; min-width: 0; border-radius: 12px; border: 1.5px solid transparent;
         padding: 13px 14px; font: inherit; font-size: 16px;
-        background: rgba(255,255,255,.1); color: inherit;
+        background: #ffffff; color: var(--ink);
       }
-      .match-row input::placeholder { color: #9fb0a3; }
+      .match-row input::placeholder { color: var(--ink-soft); }
       .match-row input:focus { outline: none; border-color: var(--signal); }
       .match-row button {
         flex: none; border: 0; border-radius: 12px; padding: 0 18px;
@@ -146,19 +132,18 @@
       }
       .match-result { margin-top: 14px; display: none; }
       .match-result.show { display: block; }
-      .match-result .mr-label { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .09em; text-transform: uppercase; color: var(--signal); margin-bottom: 8px; }
+      .match-result .mr-label { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .09em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
       .match-result a.mr-card {
         display: flex; align-items: center; gap: 12px; text-decoration: none;
-        background: rgba(255,255,255,.08); color: inherit;
+        background: #ffffff; color: var(--ink);
         border-radius: 12px; padding: 12px 14px; margin-bottom: 8px;
       }
-      @media (prefers-color-scheme: dark) { .match-result a.mr-card { background: rgba(255,255,255,.05); } }
+
       .match-result a.mr-card strong { display: block; font-size: 15.5px; }
-      .match-result a.mr-card small { color: #c3cec5; font-size: 13px; }
-      @media (prefers-color-scheme: dark) { .match-result a.mr-card small { color: var(--ink-soft); } }
+      .match-result a.mr-card small { color: var(--ink-soft); font-size: 13px; }
+
       .match-result a.mr-card .go { margin-left: auto; flex: none; color: var(--signal); font-weight: 700; font-size: 14px; }
-      .match-none { font-size: 14.5px; color: #c3cec5; }
-      @media (prefers-color-scheme: dark) { .match-none { color: var(--ink-soft); } }
+      .match-none { font-size: 14.5px; color: var(--ink-soft); }
 
       /* ---------- Category filter + grid ---------- */
       .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
@@ -166,7 +151,7 @@
         border: 1px solid var(--line); background: var(--surface); color: var(--ink);
         border-radius: 999px; padding: 8px 14px; font-size: 13.5px; font-weight: 600;
       }
-      .fbtn[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+      .fbtn[aria-pressed="true"] { background: var(--signal); color: var(--ink); border-color: #d7aa2f; }
       .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
       @media (min-width: 620px) { .grid { grid-template-columns: 1fr 1fr; } }
       .card {
@@ -218,7 +203,7 @@
       .biz h2 { font-size: 20px; }
       .biz p { margin: 0; color: var(--ink-soft); font-size: 14.5px; max-width: 52ch; }
       .biz a.btn {
-        align-self: flex-start; margin-top: 6px; background: var(--ink); color: var(--bg);
+        align-self: flex-start; margin-top: 6px; background: var(--signal); color: var(--ink);
         text-decoration: none; font-weight: 700; font-size: 15px;
         padding: 12px 18px; border-radius: 12px;
       }
