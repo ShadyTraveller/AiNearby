@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="AI Nearby — find local AI services near you: chatbot setup, AI tutoring, headshot studios, smart home help, AI marketing and more." />
+    <link rel="icon" href="data:," />
+    <title>AI Nearby — Find Local AI Services Near You</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #f6f5f0;
+        --surface: #fffdf8;
+        --surface-2: #efede4;
+        --ink: #17211c;
+        --ink-soft: #4c5a52;
+        --line: #ddd9cb;
+        --accent: #0e7a5f;
+        --accent-ink: #ffffff;
+        --accent-soft: #dcefe7;
+        --signal: #e8b33a;
+        --radius: 14px;
+        --shadow: 0 1px 2px rgba(23, 33, 28, .06), 0 8px 24px -12px rgba(23, 33, 28, .18);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #101613;
+          --surface: #182019;
+          --surface-2: #1f2a21;
+          --ink: #eef2ec;
+          --ink-soft: #a7b5ab;
+          --line: #2e3d33;
+          --accent: #2fbb92;
+          --accent-ink: #0c1712;
+          --accent-soft: #17382c;
+          --signal: #e8b33a;
+          --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -12px rgba(0, 0, 0, .6);
+        }
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+      .wrap { max-width: 680px; margin: 0 auto; padding: 0 16px 48px; }
+      @media (min-width: 900px) { .wrap { max-width: 880px; } }
+      a { color: var(--accent); }
+      button { font: inherit; cursor: pointer; }
+      :focus-visible { outline: 3px solid var(--signal); outline-offset: 2px; border-radius: 6px; }
+
+      /* ---------- Hero / search ---------- */
+      .hero { padding: 28px 0 8px; }
+      .hero-top { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+      .pin-badge {
+        width: 40px; height: 40px; flex: none;
+        background: var(--ink); color: var(--signal);
+        border-radius: 12px; display: grid; place-items: center;
+      }
+      .wordmark { font-weight: 800; font-size: 20px; letter-spacing: -.02em; line-height: 1; }
+      .wordmark small { display: block; font-family: "IBM Plex Mono", monospace; font-weight: 500; font-size: 11px; letter-spacing: .08em; color: var(--ink-soft); margin-top: 4px; text-transform: uppercase; }
+      h1 {
+        font-size: clamp(30px, 8.4vw, 46px);
+        line-height: 1.04; letter-spacing: -.03em;
+        margin: 0 0 10px; font-weight: 800; max-width: 14ch;
+      }
+      h1 .hl { background: linear-gradient(transparent 62%, var(--signal) 62%); padding: 0 2px; }
+      .lede { color: var(--ink-soft); margin: 0 0 20px; font-size: 16.5px; max-width: 46ch; }
+
+      .search-card {
+        background: var(--surface); border: 1px solid var(--line);
+        border-radius: 18px; padding: 14px; box-shadow: var(--shadow);
+      }
+      .field { margin-bottom: 10px; }
+      .field label {
+        display: block; font-family: "IBM Plex Mono", monospace;
+        font-size: 11px; font-weight: 600; letter-spacing: .09em;
+        text-transform: uppercase; color: var(--ink-soft); margin: 0 0 6px 2px;
+      }
+      .field input {
+        width: 100%; border: 1.5px solid var(--line); border-radius: 12px;
+        background: var(--bg); color: var(--ink);
+        padding: 13px 14px; font: inherit; font-size: 16px;
+        appearance: none;
+      }
+      .field input::placeholder { color: var(--ink-soft); opacity: .75; }
+      .field input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+      .loc-row { display: flex; gap: 8px; }
+      .loc-row input { flex: 1; min-width: 0; }
+      .geo-btn {
+        flex: none; border: 1.5px solid var(--line); background: var(--surface-2);
+        color: var(--ink); border-radius: 12px; padding: 0 14px;
+        font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; gap: 6px;
+      }
+      .geo-btn:active { transform: scale(.97); }
+      .search-btn {
+        width: 100%; border: 0; border-radius: 12px; margin-top: 4px;
+        background: var(--accent); color: var(--accent-ink);
+        padding: 15px; font-weight: 700; font-size: 16.5px;
+        display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      }
+      .search-btn:active { transform: scale(.985); }
+      .search-note { font-size: 13px; color: var(--ink-soft); margin: 10px 2px 0; min-height: 1.2em; }
+
+      .quick { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+      .quick span { font-size: 13px; color: var(--ink-soft); align-self: center; margin-right: 2px; }
+      .chip {
+        border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+        border-radius: 999px; padding: 8px 13px; font-size: 13.5px; font-weight: 600;
+      }
+      .chip:active { background: var(--accent-soft); }
+
+      /* ---------- Sections ---------- */
+      section { margin-top: 38px; }
+      .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+      h2 { font-size: 22px; letter-spacing: -.02em; margin: 0; font-weight: 800; }
+      .sec-sub { color: var(--ink-soft); font-size: 14.5px; margin: 0 0 16px; }
+      .count { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink-soft); white-space: nowrap; }
+
+      /* ---------- Match box ---------- */
+      .match-box {
+        background: var(--ink); color: #f2f4ef; border-radius: 18px; padding: 18px;
+      }
+      @media (prefers-color-scheme: dark) { .match-box { background: var(--surface-2); color: var(--ink); } }
+      .match-box h2 { font-size: 19px; }
+      .match-box p { color: #c3cec5; font-size: 14.5px; margin: 6px 0 12px; }
+      @media (prefers-color-scheme: dark) { .match-box p { color: var(--ink-soft); } }
+      .match-row { display: flex; gap: 8px; }
+      .match-row input {
+        flex: 1; min-width: 0; border-radius: 12px; border: 1.5px solid transparent;
+        padding: 13px 14px; font: inherit; font-size: 16px;
+        background: rgba(255,255,255,.1); color: inherit;
+      }
+      .match-row input::placeholder { color: #9fb0a3; }
+      .match-row input:focus { outline: none; border-color: var(--signal); }
+      .match-row button {
+        flex: none; border: 0; border-radius: 12px; padding: 0 18px;
+        background: var(--signal); color: #221a04; font-weight: 700;
+      }
+      .match-result { margin-top: 14px; display: none; }
+      .match-result.show { display: block; }
+      .match-result .mr-label { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .09em; text-transform: uppercase; color: var(--signal); margin-bottom: 8px; }
+      .match-result a.mr-card {
+        display: flex; align-items: center; gap: 12px; text-decoration: none;
+        background: rgba(255,255,255,.08); color: inherit;
+        border-radius: 12px; padding: 12px 14px; margin-bottom: 8px;
+      }
+      @media (prefers-color-scheme: dark) { .match-result a.mr-card { background: rgba(255,255,255,.05); } }
+      .match-result a.mr-card strong { display: block; font-size: 15.5px; }
+      .match-result a.mr-card small { color: #c3cec5; font-size: 13px; }
+      @media (prefers-color-scheme: dark) { .match-result a.mr-card small { color: var(--ink-soft); } }
+      .match-result a.mr-card .go { margin-left: auto; flex: none; color: var(--signal); font-weight: 700; font-size: 14px; }
+      .match-none { font-size: 14.5px; color: #c3cec5; }
+      @media (prefers-color-scheme: dark) { .match-none { color: var(--ink-soft); } }
+
+      /* ---------- Category filter + grid ---------- */
+      .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+      .fbtn {
+        border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+        border-radius: 999px; padding: 8px 14px; font-size: 13.5px; font-weight: 600;
+      }
+      .fbtn[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+      .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+      @media (min-width: 620px) { .grid { grid-template-columns: 1fr 1fr; } }
+      .card {
+        background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+        padding: 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 8px;
+      }
+      .card-top { display: flex; align-items: flex-start; gap: 12px; }
+      .ic {
+        width: 44px; height: 44px; flex: none; border-radius: 12px;
+        background: var(--accent-soft); color: var(--accent);
+        display: grid; place-items: center;
+      }
+      .card h3 { margin: 2px 0 0; font-size: 16.5px; letter-spacing: -.01em; line-height: 1.25; }
+      .tag {
+        margin-left: auto; flex: none; font-family: "IBM Plex Mono", monospace;
+        font-size: 10.5px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase;
+        color: var(--ink-soft); border: 1px solid var(--line); border-radius: 999px; padding: 4px 8px;
+      }
+      .card p { margin: 0; color: var(--ink-soft); font-size: 14.5px; flex: 1; }
+      .card .find {
+        align-self: flex-start; margin-top: 4px; text-decoration: none;
+        font-weight: 700; font-size: 14.5px; color: var(--accent);
+        display: inline-flex; align-items: center; gap: 6px;
+      }
+      .card .find:active { opacity: .7; }
+      .empty {
+        display: none; border: 1.5px dashed var(--line); border-radius: var(--radius);
+        padding: 22px; text-align: center; color: var(--ink-soft); font-size: 14.5px;
+      }
+      .empty.show { display: block; }
+
+      /* ---------- Steps ---------- */
+      .steps { display: grid; gap: 10px; }
+      @media (min-width: 620px) { .steps { grid-template-columns: repeat(3, 1fr); } }
+      .step { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; }
+      .step .n {
+        font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 12px;
+        color: var(--accent); background: var(--accent-soft);
+        width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; margin-bottom: 10px;
+      }
+      .step h3 { margin: 0 0 4px; font-size: 15.5px; }
+      .step p { margin: 0; font-size: 14px; color: var(--ink-soft); }
+
+      /* ---------- Business CTA ---------- */
+      .biz {
+        background: var(--accent-soft); border-radius: 18px; padding: 20px;
+        display: flex; flex-direction: column; gap: 8px;
+      }
+      .biz h2 { font-size: 20px; }
+      .biz p { margin: 0; color: var(--ink-soft); font-size: 14.5px; max-width: 52ch; }
+      .biz a.btn {
+        align-self: flex-start; margin-top: 6px; background: var(--ink); color: var(--bg);
+        text-decoration: none; font-weight: 700; font-size: 15px;
+        padding: 12px 18px; border-radius: 12px;
+      }
+
+      /* ---------- FAQ ---------- */
+      details {
+        background: var(--surface); border: 1px solid var(--line);
+        border-radius: var(--radius); padding: 0 16px; margin-bottom: 10px;
+      }
+      summary { padding: 14px 0; font-weight: 700; font-size: 15.5px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 10px; }
+      summary::-webkit-details-marker { display: none; }
+      summary::after { content: "+"; color: var(--accent); font-weight: 800; }
+      details[open ] summary::after { content: "–"; }
+      details p { margin: 0 0 14px; color: var(--ink-soft); font-size: 14.5px; }
+
+      footer {
+        margin-top: 44px; border-top: 1px solid var(--line); padding-top: 18px;
+        display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: baseline;
+        font-size: 13.5px; color: var(--ink-soft);
+      }
+      footer .fbrand { font-weight: 800; color: var(--ink); font-size: 14.5px; }
+      footer a { color: var(--ink-soft); }
+      .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+
+      <!-- ================= HERO + SEARCH ================= -->
+      <header class="hero">
+        <div class="hero-top">
+          <div class="pin-badge" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="wordmark">AI Nearby<small>ainearby.co</small></div>
+        </div>
+
+        <h1>Local AI help, <span class="hl">near you.</span></h1>
+        <p class="lede">Find people and businesses close to home who can set up, teach, and run AI tools for you — chatbots, tutoring, smart homes, marketing, and more.</p>
+
+        <form class="search-card" id="searchForm">
+          <div class="field">
+            <label for="q">What do you need?</label>
+            <input id="q" type="search" placeholder="e.g. chatbot for my shop, AI tutor, headshots" autocomplete="off" />
+          </div>
+          <div class="field">
+            <label for="loc">Where?</label>
+            <div class="loc-row">
+              <input id="loc" type="text" placeholder="City or neighbourhood" autocomplete="off" />
+              <button type="button" class="geo-btn" id="geoBtn" aria-label="Use my current location">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>
+                Near me
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="search-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            Search nearby
+          </button>
+          <p class="search-note" id="searchNote" role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="quick" aria-label="Popular searches">
+          <span>Popular:</span>
+          <button class="chip" data-q="AI tutoring">AI tutoring</button>
+          <button class="chip" data-q="AI headshot studio">AI headshots</button>
+          <button class="chip" data-q="chatbot setup for business">Chatbot setup</button>
+          <button class="chip" data-q="smart home installation">Smart home setup</button>
+          <button class="chip" data-q="AI marketing agency">AI marketing</button>
+        </div>
+      </header>
+
+      <!-- ================= QUICK MATCH ================= -->
+      <section aria-labelledby="matchH">
+        <div class="match-box">
+          <h2 id="matchH">Not sure what it's called?</h2>
+          <p>Describe what you're trying to get done, in your own words. We'll point you to the right kind of local service.</p>
+          <form class="match-row" id="matchForm">
+            <label class="sr-only" for="need">Describe what you need</label>
+            <input id="need" type="text" placeholder="e.g. I want my shop to answer customer messages automatically" autocomplete="off" />
+            <button type="submit">Match me</button>
+          </form>
+          <div class="match-result" id="matchResult" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- ================= CATEGORIES ================= -->
+      <section aria-labelledby="catH">
+        <div class="sec-head">
+          <h2 id="catH">Browse services</h2>
+          <span class="count" id="catCount"></span>
+        </div>
+        <p class="sec-sub">Tap a service to see providers around your location on the map.</p>
+
+        <div class="filters" role="group" aria-label="Filter services">
+          <button class="fbtn" data-filter="all" aria-pressed="true">All</button>
+          <button class="fbtn" data-filter="business" aria-pressed="false">For business</button>
+          <button class="fbtn" data-filter="personal" aria-pressed="false">For you &amp; family</button>
+          <button class="fbtn" data-filter="home" aria-pressed="false">At home</button>
+        </div>
+
+        <div class="grid" id="grid"></div>
+        <div class="empty" id="emptyState">No services match that filter and search. Try clearing the search box above.</div>
+      </section>
+
+      <!-- ================= HOW IT WORKS ================= -->
+      <section aria-labelledby="howH">
+        <h2 id="howH" style="margin-bottom:14px;">How it works</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="n">1</div>
+            <h3>Say what you need</h3>
+            <p>Pick a service or describe the job in plain words — no tech jargon needed.</p>
+          </div>
+          <div class="step">
+            <div class="n">2</div>
+            <h3>See who's close</h3>
+            <p>We open a live map search around your city or neighbourhood, so results are always current.</p>
+          </div>
+          <div class="step">
+            <div class="n">3</div>
+            <h3>Contact them directly</h3>
+            <p>Call, message, or visit the provider yourself. AI Nearby never takes a cut of your booking.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= FOR BUSINESS ================= -->
+      <section aria-labelledby="bizH">
+        <div class="biz">
+          <h2 id="bizH">Offer AI services locally?</h2>
+          <p>If you set up chatbots, teach AI tools, run a content studio, or help homes and businesses with AI in any hands-on way, get in front of neighbours who are searching for exactly that.</p>
+          <a class="btn" href="mailto:ainearby@gmail.com?subject=List%20my%20AI%20service%20on%20AI%20Nearby&amp;body=Business%20name%3A%0AService%20offered%3A%0ACity%20%2F%20area%20served%3A%0AWebsite%20or%20phone%3A">List your service — it's free</a>
+        </div>
+      </section>
+
+      <!-- ================= FAQ ================= -->
+      <section aria-labelledby="faqH">
+        <h2 id="faqH" style="margin-bottom:14px;">Questions</h2>
+        <details>
+          <summary>What counts as an “AI service”?</summary>
+          <p>Any hands-on, local help built on AI tools: someone who sets up a chatbot for your shop, a tutor who teaches with AI, a studio making AI-assisted headshots or video, a technician who installs voice assistants and smart cameras, or a consultant who automates your paperwork.</p>
+        </details>
+        <details>
+          <summary>Does AI Nearby book or charge anything?</summary>
+          <p>No. AI Nearby is a finder, not a marketplace. Searches open live map results, and you deal with the provider directly — no booking fees and no commission.</p>
+        </details>
+        <details>
+          <summary>Why do results open in a map?</summary>
+          <p>Local providers open, close, and move all the time. A live map search always shows current businesses, hours, reviews, and directions for your exact area, instead of a stale list.</p>
+        </details>
+        <details>
+          <summary>Is my location shared with AI Nearby?</summary>
+          <p>No. If you tap “Near me,” your browser uses your location only to build the map search on your device. Nothing is sent to or stored by AI Nearby — this site has no database and no accounts.</p>
+        </details>
+      </section>
+
+      <footer>
+        <span class="fbrand">AI Nearby</span>
+        <span>ainearby.co — find local AI &amp; services near you.</span>
+        <a href="mailto:ainearby@gmail.com">ainearby@gmail.com</a>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        /* ---------- Data: service categories ---------- */
+        var ICONS = {
+          chat: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>',
+          book: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"/></svg>',
+          camera: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>',
+          home: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M12 22v-8"/><path d="M9 11.5a3 3 0 0 1 6 0"/></svg>',
+          chart: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-5 3 3 5-7"/></svg>',
+          globe: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+          grad: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5"/><path d="M22 9v5"/></svg>',
+          phone: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
+          gear: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>',
+          video: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg>',
+          pen: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>',
+          shield: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>'
+        };
+
+        var CATEGORIES = [
+          { id: "chatbot", name: "Chatbot Setup for Business", group: "business", tag: "Business",
+            desc: "A local pro adds an AI assistant to your website or WhatsApp that answers customer questions day and night.",
+            query: "AI chatbot services for business",
+            keys: ["chatbot", "chat bot", "answer messages", "customer messages", "whatsapp", "website chat", "reply to customers", "automated replies"] },
+          { id: "tutoring", name: "AI Tutoring & Homework Help", group: "personal", tag: "Family",
+            desc: "Tutors who use AI tools to personalise lessons, practise languages, and make homework click.",
+            query: "AI tutoring services",
+            keys: ["tutor", "homework", "school", "learn", "study", "kids", "math help", "language practice", "lessons"] },
+          { id: "headshots", name: "AI Photo & Headshot Studios", group: "personal", tag: "Photos",
+            desc: "Studios offering AI-enhanced portraits, professional headshots, and photo restoration nearby.",
+            query: "AI headshot studio",
+            keys: ["photo", "headshot", "portrait", "picture", "linkedin photo", "restore photos", "photography"] },
+          { id: "smarthome", name: "Smart Home Setup", group: "home", tag: "Home",
+            desc: "Installers for voice assistants, smart speakers, cameras, doorbells, lights, and thermostats.",
+            query: "smart home installation",
+            keys: ["smart home", "camera", "doorbell", "alexa", "google home", "voice assistant", "thermostat", "smart lights", "security camera"] },
+          { id: "marketing", name: "AI Marketing for Local Business", group: "business", tag: "Business",
+            desc: "Marketers who use AI to write posts, ads, and emails that bring in local customers.",
+            query: "AI marketing agency",
+            keys: ["marketing", "social media", "ads", "instagram", "facebook posts", "promote", "customers", "advertising", "content for my shop"] },
+          { id: "web", name: "AI Website & App Builders", group: "business", tag: "Business",
+            desc: "Designers who build fast, modern websites and simple apps for local businesses using AI tools.",
+            query: "AI web design services",
+            keys: ["website", "web site", "app", "online store", "shop online", "booking page", "web design"] },
+          { id: "lessons", name: "One-on-One AI Lessons", group: "personal", tag: "Learning",
+            desc: "Patient, in-person lessons on ChatGPT and everyday AI tools — for work, school, or curiosity.",
+            query: "AI training lessons",
+            keys: ["teach me", "learn ai", "chatgpt help", "how to use ai", "training", "course", "teach", "senior", "beginner"] },
+          { id: "answering", name: "AI Phone Answering", group: "business", tag: "Business",
+            desc: "Services that answer your business calls with a natural AI voice, take messages, and book appointments.",
+            query: "AI answering service",
+            keys: ["answer calls", "phone calls", "missed calls", "receptionist", "book appointments", "call answering", "front desk"] },
+          { id: "automation", name: "Business Automation & Data Help", group: "business", tag: "Business",
+            desc: "Consultants who automate invoices, spreadsheets, forms, and repetitive office work.",
+            query: "business automation consultant",
+            keys: ["automate", "spreadsheet", "excel", "invoices", "paperwork", "data entry", "forms", "bookkeeping", "admin"] },
+          { id: "video", name: "AI Video & Content Studios", group: "personal", tag: "Content",
+            desc: "Local studios making short videos, reels, and product clips with AI-assisted editing.",
+            query: "AI video production studio",
+            keys: ["video", "tiktok", "reels", "youtube", "film", "edit video", "content creator", "product video"] },
+          { id: "writing", name: "AI Writing & Resume Help", group: "personal", tag: "Writing",
+            desc: "Help with resumes, cover letters, and documents — written with AI, polished by a person.",
+            query: "resume writing service",
+            keys: ["resume", "cv", "cover letter", "write", "writing", "job application", "essay", "document"] },
+          { id: "homerepair", name: "Smart Device Help at Home", group: "home", tag: "Home",
+            desc: "Friendly techs who set up phones, tablets, TVs, and Wi-Fi, and show you the AI features on them.",
+            query: "home tech support",
+            keys: ["phone setup", "tablet", "tv", "wifi", "wi-fi", "computer help", "tech support", "set up my", "printer"] }
+        ];
+
+        /* ---------- Elements ---------- */
+        var grid = document.getElementById("grid");
+        var emptyState = document.getElementById("emptyState");
+        var catCount = document.getElementById("catCount");
+        var qInput = document.getElementById("q");
+        var locInput = document.getElementById("loc");
+        var searchNote = document.getElementById("searchNote");
+        var activeFilter = "all";
+        var coords = null; // {lat, lng} when geolocation succeeds
+
+        function locationText() {
+          if (coords) return coords.lat.toFixed(5) + "," + coords.lng.toFixed(5);
+          var v = locInput.value.trim();
+          return v || "near me";
+        }
+
+        function mapsUrl(query) {
+          return "https://www.google.com/maps/search/" + encodeURIComponent(query + " near " + locationText());
+        }
+
+        /* ---------- Render category cards ---------- */
+        function render() {
+          var term = qInput.value.trim().toLowerCase();
+          var shown = 0;
+          grid.innerHTML = "";
+          CATEGORIES.forEach(function (c) {
+            var inFilter = activeFilter === "all" || c.group === activeFilter;
+            var inSearch = !term || c.name.toLowerCase().indexOf(term) > -1 ||
+              c.desc.toLowerCase().indexOf(term) > -1 ||
+              c.keys.some(function (k) { return term.indexOf(k) > -1 || k.indexOf(term) > -1; });
+            if (!inFilter || !inSearch) return;
+            shown++;
+            var card = document.createElement("article");
+            card.className = "card";
+            card.innerHTML =
+              '<div class="card-top">' +
+                '<div class="ic">' + (ICONS[c.icon] || ICONS.chat) + '</div>' +
+                '<h3></h3><span class="tag"></span>' +
+              '</div>' +
+              '<p></p>' +
+              '<a class="find" target="_blank" rel="noopener">Find near me ' +
+                '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>' +
+              '</a>';
+            card.querySelector("h3").textContent = c.name;
+            card.querySelector(".tag").textContent = c.tag;
+            card.querySelector("p").textContent = c.desc;
+            card.querySelector(".find").href = mapsUrl(c.query);
+            grid.appendChild(card);
+          });
+          catCount.textContent = shown + " of " + CATEGORIES.length + " services";
+          emptyState.classList.toggle("show", shown === 0);
+        }
+
+        // Assign icons by id (kept separate so data above stays readable)
+        var ICON_BY_ID = { chatbot: "chat", tutoring: "book", headshots: "camera", smarthome: "home",
+          marketing: "chart", web: "globe", lessons: "grad", answering: "phone",
+          automation: "gear", video: "video", writing: "pen", homerepair: "shield" };
+        CATEGORIES.forEach(function (c) { c.icon = ICON_BY_ID[c.id] || "chat"; });
+
+        /* ---------- Filters ---------- */
+        document.querySelectorAll(".fbtn").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            document.querySelectorAll(".fbtn").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
+            btn.setAttribute("aria-pressed", "true");
+            activeFilter = btn.getAttribute("data-filter");
+            render();
+          });
+        });
+
+        /* ---------- Search box drives the grid filter ---------- */
+        qInput.addEventListener("input", render);
+        locInput.addEventListener("input", function () { coords = null; render(); });
+
+        /* ---------- Popular chips ---------- */
+        document.querySelectorAll(".chip").forEach(function (chip) {
+          chip.addEventListener("click", function () {
+            qInput.value = chip.getAttribute("data-q");
+            render();
+            document.getElementById("catH").scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        });
+
+        /* ---------- Main search: open map results ---------- */
+        document.getElementById("searchForm").addEventListener("submit", function (e) {
+          e.preventDefault();
+          var q = qInput.value.trim() || "AI services";
+          window.open(mapsUrl(q), "_blank", "noopener");
+          searchNote.textContent = "Opened map results for “" + q + "” around " +
+            (coords ? "your current location" : (locInput.value.trim() || "you")) + ".";
+        });
+
+        /* ---------- Geolocation ---------- */
+        document.getElementById("geoBtn").addEventListener("click", function () {
+          if (!navigator.geolocation) {
+            searchNote.textContent = "Location isn't available in this browser — type your city instead.";
+            return;
+          }
+          searchNote.textContent = "Finding your location…";
+          navigator.geolocation.getCurrentPosition(
+            function (pos) {
+              coords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+              locInput.value = "My current location";
+              searchNote.textContent = "Location set. “Find near me” links now search around you.";
+              render();
+            },
+            function () {
+              searchNote.textContent = "Couldn't get your location — type your city or neighbourhood instead.";
+            },
+            { timeout: 10000, maximumAge: 600000 }
+          );
+        });
+
+        /* ---------- Quick match ---------- */
+        var matchResult = document.getElementById("matchResult");
+        document.getElementById("matchForm").addEventListener("submit", function (e) {
+          e.preventDefault();
+          var text = document.getElementById("need").value.trim().toLowerCase();
+          matchResult.className = "match-result show";
+          if (!text) {
+            matchResult.innerHTML = '<p class="match-none">Type a sentence about what you want to get done — for example, “help my kids with homework” or “answer the phone at my shop.”</p>';
+            return;
+          }
+          var scored = CATEGORIES.map(function (c) {
+            var score = 0;
+            c.keys.forEach(function (k) { if (text.indexOf(k) > -1) score += k.length; });
+            return { c: c, score: score };
+          }).filter(function (s) { return s.score > 0; })
+            .sort(function (a, b) { return b.score - a.score; })
+            .slice(0, 3);
+
+          if (!scored.length) {
+            matchResult.innerHTML = '<p class="match-none">No clear match — try the search at the top with a word like “tutor,” “photo,” “website,” or “smart home,” or browse all services below.</p>';
+            return;
+          }
+          var html = '<div class="mr-label">Best matches</div>';
+          scored.forEach(function (s) {
+            html += '<a class="mr-card" target="_blank" rel="noopener" href="' + mapsUrl(s.c.query) + '">' +
+              '<span><strong></strong><small></small></span><span class="go">Find →</span></a>';
+          });
+          matchResult.innerHTML = html;
+          var cards = matchResult.querySelectorAll(".mr-card");
+          scored.forEach(function (s, i) {
+            cards[i].querySelector("strong").textContent = s.c.name;
+            cards[i].querySelector("small").textContent = s.c.desc;
+          });
+        });
+
+        render();
+      })();
+    </script>
+  </body>
+</html>
